@@ -6,7 +6,9 @@
 ##
 
 SRC = 	src/main.c\
-		src/init_window.c
+		src/init_window.c\
+		src/button_creator.c\
+		src/start_screen.c
 
 
 OBJ = $(SRC:.c=.o)

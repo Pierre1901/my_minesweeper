@@ -13,7 +13,32 @@
 #ifndef MY_H
     #define MY_H
 
-int init_window(void);
+#define MAX 20
+
+typedef struct button_s {
+    sfRectangleShape *rect;
+    sfBool (*is_clicked)(struct button_s *, sfMouseButtonEvent);
+    sfBool (*is_hover)(struct button_s *, sfMouseMoveEvent);
+    sfTexture *texture;
+    int is_actif;
+    int view;
+} button_s;
+
+typedef struct creator_t {
+    button_s *button[MAX];
+    int count;
+} creator_t;
+
+//init_window.c
+int init_window(creator_t *button);
+
+//button_creator.c
+int create_all_buttons(creator_t *button_creator);
+creator_t *init_button(void);
+void draw_button(creator_t *button_creator, sfRenderWindow *window);
+
+//start_screen.c
+int start_screen(sfRenderWindow *window, creator_t *button);
 
 
 #endif
