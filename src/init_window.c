@@ -11,7 +11,9 @@ int init_window(creator_t *button)
     sfVideoMode mode = {1920, 1080, 32};
     sfRenderWindow *window = sfRenderWindow_create
             (mode, "my_minesweeper", sfResize | sfClose, NULL);
+    int game = 0;
     sfEvent event;
+
     if (!window)
         return 1;
     create_all_buttons(button);
@@ -19,10 +21,14 @@ int init_window(creator_t *button)
         while (sfRenderWindow_pollEvent(window, &event)){
             if (event.type == sfEvtClosed)
                 sfRenderWindow_close(window);
+            handle_event(&event, button, window, &game);
         }
-        sfRenderWindow_clear(window, sfBlack);
-        draw_button(button, window);
-        sfRenderWindow_display(window);
+        if (game == 0) {
+            sfRenderWindow_clear(window, sfBlack);
+            start_screen(window, button);
+            sfRenderWindow_display(window);
+        }
+        lunch_difficulty(window, game);
     }
     sfRenderWindow_destroy(window);
     return 0;

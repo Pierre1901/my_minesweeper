@@ -80,5 +80,9 @@ int create_all_buttons(creator_t *button_creator)
 {
     create_and_add_button(button_creator,
                           (sfVector2f){700, 80}, (sfVector2f){500, 100});
+    create_and_add_button(button_creator,
+                          (sfVector2f){700, 200}, (sfVector2f){500, 100});
+
+
     return 0;
 }
