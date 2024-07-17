@@ -30,12 +30,18 @@ void handle_event(sfEvent *event, creator_t *button_creator, sfRenderWindow *win
         sfRenderWindow_setView(window, sfView_createFromRect(visibleArea));
 }
 
-void lunch_difficulty(sfRenderWindow *window, int game)
+void lunch_difficulty(sfRenderWindow *window, int game, creator_t *buttons)
 {
-    if (game == 1)
-        puts("bou");
-    if (game == 2)
+    if (game == 1){
+        sfRenderWindow_clear(window, sfBlack);
+        sfRenderWindow_display(window);
+        puts("bonjour");
+    }
+    if (game == 2) {
+        sfRenderWindow_clear(window, sfBlack);
+        sfRenderWindow_display(window);
         puts("salut");
+    }
 }
 
 int start_screen(sfRenderWindow *window, creator_t *button)

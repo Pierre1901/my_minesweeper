@@ -28,7 +28,7 @@ int init_window(creator_t *button)
             start_screen(window, button);
             sfRenderWindow_display(window);
         }
-        lunch_difficulty(window, game);
+        lunch_difficulty(window, game, button);
     }
     sfRenderWindow_destroy(window);
     return 0;
