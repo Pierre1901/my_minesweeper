@@ -39,6 +39,8 @@ void draw_button(creator_t *button_creator, sfRenderWindow *window);
 
 //start_screen.c
 int start_screen(sfRenderWindow *window, creator_t *button);
+void handle_event(sfEvent *event, creator_t *button_creator, sfRenderWindow *window, int *game);
+void lunch_difficulty(sfRenderWindow *window, int game);
 
 
 #endif
