@@ -25,7 +25,8 @@ int init_window(creator_t *button)
         }
         if (game == 0) {
             sfRenderWindow_clear(window, sfBlack);
-            start_screen(window, button);
+            if (start_screen(window, button) == 1)
+                return 1;
             sfRenderWindow_display(window);
         }
         lunch_difficulty(window, game, button);

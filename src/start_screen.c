@@ -6,6 +6,19 @@
 
 #include "../my.h"
 
+static int show_name_of_game(sfRenderWindow *window)
+{
+    sfFont *font = sfFont_createFromFile("ressources/Championship.ttf");
+    if (font == NULL)
+        return 1;
+    sfText *text = sfText_create();
+    sfText_setFont(text, font);
+    sfText_setString(text, "MINESWEEPER");
+    sfText_setPosition(text, (sfVector2f){400, 200});
+    sfRenderWindow_drawText(window, text, NULL);
+    return 0;
+}
+
 void handle_event(sfEvent *event, creator_t *button_creator, sfRenderWindow *window, int *game)
 {
     if (event->type == sfEvtMouseButtonPressed) {
@@ -47,5 +60,7 @@ void lunch_difficulty(sfRenderWindow *window, int game, creator_t *buttons)
 int start_screen(sfRenderWindow *window, creator_t *button)
 {
     draw_button(button, window);
+    if (show_name_of_game(window) == 1)
+        return 1;
     return 0;
 }
