@@ -8,7 +8,9 @@
 SRC = 	src/main.c\
 		src/init_window.c\
 		src/button_creator.c\
-		src/start_screen.c
+		src/start_screen.c\
+		src/handle_events.c\
+		src/chose_difficulty.c\
 
 
 OBJ = $(SRC:.c=.o)

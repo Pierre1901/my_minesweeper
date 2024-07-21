@@ -13,6 +13,7 @@ int init_window(creator_t *button)
             (mode, "my_minesweeper", sfResize | sfClose, NULL);
     int game = 0;
     sfEvent event;
+    sfClock *clock = sfClock_create();
 
     if (!window)
         return 1;
@@ -25,12 +26,13 @@ int init_window(creator_t *button)
         }
         if (game == 0) {
             sfRenderWindow_clear(window, sfBlack);
-            if (start_screen(window, button) == 1)
+            if (start_screen(window, button, clock) == 1)
                 return 1;
             sfRenderWindow_display(window);
         }
         lunch_difficulty(window, game, button);
     }
     sfRenderWindow_destroy(window);
+    sfClock_destroy(clock);
     return 0;
 }

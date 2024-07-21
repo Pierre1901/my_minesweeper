@@ -58,10 +58,10 @@ void create_and_add_button(creator_t *button_creator,
     if (!new_button) {
         return;
     }
-    //sfTexture *texture = sfTexture_createFromFile("graphic/flamingo/play.jpg", NULL);
+    sfTexture *texture = sfTexture_createFromFile("ressources/play_button.png", NULL);
 
-//    if (!texture)
-//        return;
+    if (!texture)
+        return;
     new_button->rect = sfRectangleShape_create();
     new_button->is_clicked = is_button_clicked;
     new_button->is_hover = is_button_hover;
@@ -73,7 +73,7 @@ void create_and_add_button(creator_t *button_creator,
     sfRectangleShape_setOutlineColor(new_button->rect, sfBlack);
     sfRectangleShape_setFillColor(new_button->rect, sfWhite);
     add_button(button_creator, new_button);
-    //sfRectangleShape_setTexture(button_creator->button[0]->rect, texture, sfTrue);
+    sfRectangleShape_setTexture(button_creator->button[0]->rect, texture, sfTrue);
 }
 
 int create_all_buttons(creator_t *button_creator)

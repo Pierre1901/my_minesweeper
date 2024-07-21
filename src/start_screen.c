@@ -19,46 +19,30 @@ static int show_name_of_game(sfRenderWindow *window)
     return 0;
 }
 
-void handle_event(sfEvent *event, creator_t *button_creator, sfRenderWindow *window, int *game)
+static int show_animate_background(sfRenderWindow *window, sfClock *clock)
 {
-    if (event->type == sfEvtMouseButtonPressed) {
-        for (int i = 0; i < button_creator->count; i++) {
-            if (button_creator->button[0]->is_clicked(button_creator->button[0], event->mouseButton))
-                *game = 1;
-            if (button_creator->button[1]->is_clicked(button_creator->button[1], event->mouseButton))
-                *game = 2;
-        }
-    }
-    if (event->type == sfEvtMouseMoved) {
-        for (int i = 0; i < button_creator->count; i++) {
-            if (button_creator->button[i]->is_hover(button_creator->button[i], event->mouseMove))
-                sfRectangleShape_setFillColor(button_creator->button[i]->rect, sfRed);
-            else
-                sfRectangleShape_setFillColor(button_creator->button[i]->rect, sfWhite);
-        }
-    }
-    sfFloatRect visibleArea =
-            {0.f, 0.f, (float)event->size.width, (float)event->size.height};
-    if (event->type == sfEvtResized)
-        sfRenderWindow_setView(window, sfView_createFromRect(visibleArea));
+    const int frame_width = 750;
+    const int frame_height = 422;
+    const int total_frames = 1;
+    const float time_per_frame = 0.2f;
+    sfTexture *texture = sfTexture_createFromFile("ressources/mine.png", NULL);
+    sfTime time = sfClock_getElapsedTime(clock);
+    float seconds = sfTime_asSeconds(time);
+    int current_frame = (int)(seconds / time_per_frame) % total_frames;
+    sfIntRect frame_rect = {current_frame * frame_width, 0, frame_width, frame_height};
+    sfSprite *sprite = sfSprite_create();
+    sfSprite_setTexture(sprite, texture, sfTrue);
+    sfSprite_setTextureRect(sprite, frame_rect);
+    sfSprite_setPosition(sprite, (sfVector2f){0, 0});
+    sfSprite_setScale(sprite, (sfVector2f){3.0f, 3.0f});
+    sfRenderWindow_drawSprite(window, sprite, NULL);
+    sfSprite_destroy(sprite);
+    return 0;
 }
 
-void lunch_difficulty(sfRenderWindow *window, int game, creator_t *buttons)
+int start_screen(sfRenderWindow *window, creator_t *button, sfClock *clock)
 {
-    if (game == 1){
-        sfRenderWindow_clear(window, sfBlack);
-        sfRenderWindow_display(window);
-        puts("bonjour");
-    }
-    if (game == 2) {
-        sfRenderWindow_clear(window, sfBlack);
-        sfRenderWindow_display(window);
-        puts("salut");
-    }
-}
-
-int start_screen(sfRenderWindow *window, creator_t *button)
-{
+    show_animate_background(window, clock);
     draw_button(button, window);
     if (show_name_of_game(window) == 1)
         return 1;
