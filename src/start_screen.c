@@ -16,6 +16,8 @@ static int show_name_of_game(sfRenderWindow *window)
     sfText_setString(text, "MINESWEEPER");
     sfText_setPosition(text, (sfVector2f){400, 200});
     sfRenderWindow_drawText(window, text, NULL);
+    sfFont_destroy(font);
+    sfText_destroy(text);
     return 0;
 }
 
@@ -36,15 +38,24 @@ static int show_animate_background(sfRenderWindow *window, sfClock *clock)
     sfSprite_setPosition(sprite, (sfVector2f){0, 0});
     sfSprite_setScale(sprite, (sfVector2f){3.0f, 3.0f});
     sfRenderWindow_drawSprite(window, sprite, NULL);
+    sfTexture_destroy(texture);
     sfSprite_destroy(sprite);
     return 0;
 }
 
 int start_screen(sfRenderWindow *window, creator_t *button, sfClock *clock)
 {
+    sfTexture *texture = sfTexture_createFromFile("ressources/easy_button.png", NULL);
+    sfTexture *texture_hard = sfTexture_createFromFile("ressources/hard_button.png", NULL);
+
+    if (!texture || !texture_hard)
+        return 1;
+    sfRectangleShape_setTexture(button->button[0]->rect, texture, sfTrue);
+    sfRectangleShape_setTexture(button->button[1]->rect, texture_hard, sfTrue);
     show_animate_background(window, clock);
     draw_button(button, window);
     if (show_name_of_game(window) == 1)
         return 1;
+    sfTexture_destroy(texture);
     return 0;
 }

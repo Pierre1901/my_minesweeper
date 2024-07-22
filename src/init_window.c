@@ -31,8 +31,10 @@ int init_window(creator_t *button)
             sfRenderWindow_display(window);
         }
         lunch_difficulty(window, game, button);
+
     }
     sfRenderWindow_destroy(window);
+    destroy_button(button);
     sfClock_destroy(clock);
     return 0;
 }

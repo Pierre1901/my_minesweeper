@@ -36,6 +36,7 @@ int init_window(creator_t *button);
 int create_all_buttons(creator_t *button_creator);
 creator_t *init_button(void);
 void draw_button(creator_t *button_creator, sfRenderWindow *window);
+void destroy_button(creator_t *button_creator);
 
 //start_screen.c
 int start_screen(sfRenderWindow *window, creator_t *button, sfClock *clock);
