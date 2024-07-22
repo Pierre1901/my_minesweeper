@@ -10,6 +10,7 @@ void lunch_difficulty(sfRenderWindow *window, int game, creator_t *buttons)
 {
     if (game == 1){
         sfRenderWindow_clear(window, sfBlack);
+        start_easy(window);
         sfRenderWindow_display(window);
     }
     if (game == 2) {
