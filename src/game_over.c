@@ -13,6 +13,7 @@ void show_game_over_screen(sfRenderWindow *window, int *lose, sfEvent event, int
         while (sfRenderWindow_pollEvent(window, &event)) {
             if (event.type == sfEvtKeyPressed && event.key.code == sfKeyR) {
                 *lose = 0;
+                *in_game = 0;
             }
         }
         sfRenderWindow_display(window);

@@ -7,6 +7,8 @@
 #include "../my.h"
 
 #define EASY_SIZE 10
+#define MAX_EASY 10
+
 
 typedef struct grid_t {
     int is_mine;
@@ -15,6 +17,22 @@ typedef struct grid_t {
 } grid_t;
 
 
+void place_mine_on_grid(grid_t grid[EASY_SIZE][EASY_SIZE])
+{
+    int mine_placed = 0;
+    int x = 0;
+    int y = 0;
+
+    srand(time(NULL));
+    while(mine_placed < MAX_EASY){
+        x = rand() % EASY_SIZE;
+        y = rand() % EASY_SIZE;
+        if (!grid[x][y].is_mine){
+            grid[x][y].is_mine = 1;
+            mine_placed++;
+        }
+    }
+}
 
 void init_grid(grid_t grid[EASY_SIZE][EASY_SIZE])
 {
@@ -25,6 +43,7 @@ void init_grid(grid_t grid[EASY_SIZE][EASY_SIZE])
             grid[i][j].is_revealed = 0;
         }
     }
+    place_mine_on_grid(grid);
 }
 
 int start_easy(sfRenderWindow *window, int *close)
@@ -53,7 +72,12 @@ int start_easy(sfRenderWindow *window, int *close)
         for (int i = 0; i < EASY_SIZE; i++){
             for (int j = 0; j < EASY_SIZE; j++){
                 sfRectangleShape_setPosition(rect, (sfVector2f){i * 40.0f + 1, j * 40.0f + 1});
+                if (grid[i][j].is_mine == 1)
+                    sfRectangleShape_setFillColor(rect, sfRed);
+                else
+                    sfRectangleShape_setFillColor(rect, sfWhite);
                 sfRenderWindow_drawRectangleShape(window, rect, NULL);
+
             }
         }
         sfRenderWindow_display(window);

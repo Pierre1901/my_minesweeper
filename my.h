@@ -9,6 +9,7 @@
 #include "stdio.h"
 #include "SFML/Graphics.h"
 #include "unistd.h"
+#include "time.h"
 
 #ifndef MY_H
     #define MY_H
