@@ -33,7 +33,7 @@ int init_window(creator_t *button)
         while (sfRenderWindow_pollEvent(window, &event)){
             if (event.type == sfEvtClosed)
                 sfRenderWindow_close(window);
-            handle_event(&event, button, window, &game);
+            handle_event_in_menu(&event, button, window, &game);
         }
         if (draw_menu(window, game, button, clock) == 1)
             return 1;

@@ -6,7 +6,7 @@
 
 #include "../my.h"
 
-void handle_event(sfEvent *event, creator_t *button_creator, sfRenderWindow *window, int *game)
+void handle_event_in_menu(sfEvent *event, creator_t *button_creator, sfRenderWindow *window, int *game)
 {
     if (event->type == sfEvtMouseButtonPressed) {
         for (int i = 0; i < button_creator->count; i++) {
@@ -28,4 +28,25 @@ void handle_event(sfEvent *event, creator_t *button_creator, sfRenderWindow *win
             {0.f, 0.f, (float)event->size.width, (float)event->size.height};
     if (event->type == sfEvtResized)
         sfRenderWindow_setView(window, sfView_createFromRect(visibleArea));
+}
+
+void handle_events_in_easy_game(sfRenderWindow *window, int *close, int *lose, int *in_game, grid_t grid[EASY_SIZE][EASY_SIZE], sfEvent *event)
+{
+
+    while (sfRenderWindow_pollEvent(window, event)){
+        if (event->type == sfEvtClosed || (event->type == sfEvtKeyPressed && event->key.code == sfKeyQ)) {
+            *close = 0;
+        }
+        if (event->type == sfEvtKeyPressed && event->key.code == sfKeyS)
+            *lose = 1;
+        if (event->type == sfEvtKeyPressed && event->key.code == sfKeyR)
+            *in_game = 0;
+        if (event->type == sfEvtMouseButtonPressed){
+            sfVector2i mouse_pos = sfMouse_getPositionRenderWindow(window);
+            int x = mouse_pos.x / 40.0f;
+            int y = mouse_pos.y / 40.0f;
+            if (event->mouseButton.button == sfMouseRight)
+                grid[x][y].is_flagged = !grid[x][y].is_flagged;
+        }
+    }
 }

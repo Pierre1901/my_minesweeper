@@ -6,15 +6,7 @@
 
 #include "../my.h"
 
-#define EASY_SIZE 10
-#define MAX_EASY 10
 
-
-typedef struct grid_t {
-    int is_mine;
-    int is_flagged;
-    int is_revealed;
-} grid_t;
 
 
 static void place_mine_on_grid(grid_t grid[EASY_SIZE][EASY_SIZE])
@@ -84,22 +76,7 @@ int start_easy(sfRenderWindow *window, int *close)
         return 1;
     while (in_game && *close){
         sfRenderWindow_clear(window, sfBlack);
-        while (sfRenderWindow_pollEvent(window, &event)){
-            if (event.type == sfEvtClosed || (event.type == sfEvtKeyPressed && event.key.code == sfKeyQ)) {
-               *close = 0;
-            }
-            if (event.type == sfEvtKeyPressed && event.key.code == sfKeyS)
-                    lose = 1;
-            if (event.type == sfEvtKeyPressed && event.key.code == sfKeyR)
-                in_game = 0;
-            if (event.type == sfEvtMouseButtonPressed){
-                sfVector2i mouse_pos = sfMouse_getPositionRenderWindow(window);
-                int x = mouse_pos.x / 40.0f;
-                int y = mouse_pos.y / 40.0f;
-                if (event.mouseButton.button == sfMouseRight)
-                    grid[x][y].is_flagged = !grid[x][y].is_flagged;
-            }
-        }
+        handle_events_in_easy_game(window, close, &lose, &in_game, grid, &event);
         if (*close == 0)
             break;
         show_game_over_screen(window, &lose, event, &in_game);
