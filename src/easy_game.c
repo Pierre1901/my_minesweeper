@@ -65,6 +65,8 @@ int start_easy(sfRenderWindow *window, int *close)
             }
             if (event.type == sfEvtKeyPressed && event.key.code == sfKeyS)
                     lose = 1;
+            if (event.type == sfEvtKeyPressed && event.key.code == sfKeyR)
+                in_game = 0;
         }
         if (*close == 0)
             break;
