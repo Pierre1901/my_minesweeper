@@ -56,7 +56,10 @@ int start_easy(sfRenderWindow *window, int *close)
     sfRectangleShape *rect = sfRectangleShape_create();
     sfRectangleShape_setSize(rect, (sfVector2f){38.0f, 38.0f});
     sfEvent event;
+    sfTexture *flag_text = sfTexture_createFromFile("ressources/flag.png", NULL);
 
+    if (!flag_text)
+        return 1;
     while (in_game && *close){
         sfRenderWindow_clear(window, sfBlack);
         while (sfRenderWindow_pollEvent(window, &event)){
@@ -81,17 +84,24 @@ int start_easy(sfRenderWindow *window, int *close)
         for (int i = 0; i < EASY_SIZE; i++){
             for (int j = 0; j < EASY_SIZE; j++){
                 sfRectangleShape_setPosition(rect, (sfVector2f){i * 40.0f + 1, j * 40.0f + 1});
-                if (grid[i][j].is_mine == 1)
-                    sfRectangleShape_setFillColor(rect, sfRed);
-                else if (grid[i][j].is_flagged == 1)
-                    sfRectangleShape_setFillColor(rect, sfGreen);
-                else
+                if (grid[i][j].is_flagged == 1) {
+                    sfRectangleShape_setTexture(rect, flag_text, sfTrue);
                     sfRectangleShape_setFillColor(rect, sfWhite);
+                }
+                else if (grid[i][j].is_mine == 1) {
+                    sfRectangleShape_setTexture(rect, NULL, sfFalse);
+                    sfRectangleShape_setFillColor(rect, sfRed);
+                }
+                else {
+                    sfRectangleShape_setTexture(rect, NULL, sfFalse);
+                    sfRectangleShape_setFillColor(rect, sfWhite);
+                }
                 sfRenderWindow_drawRectangleShape(window, rect, NULL);
             }
         }
         sfRenderWindow_display(window);
     }
     sfRectangleShape_destroy(rect);
+    sfTexture_destroy(flag_text);
     return 0;
 }
