@@ -67,6 +67,13 @@ int start_easy(sfRenderWindow *window, int *close)
                     lose = 1;
             if (event.type == sfEvtKeyPressed && event.key.code == sfKeyR)
                 in_game = 0;
+            if (event.type == sfEvtMouseButtonPressed){
+                sfVector2i mouse_pos = sfMouse_getPositionRenderWindow(window);
+                int x = mouse_pos.x / 40.0f;
+                int y = mouse_pos.y / 40.0f;
+                if (event.mouseButton.button == sfMouseRight)
+                    grid[x][y].is_flagged = !grid[x][y].is_flagged;
+            }
         }
         if (*close == 0)
             break;
@@ -76,17 +83,15 @@ int start_easy(sfRenderWindow *window, int *close)
                 sfRectangleShape_setPosition(rect, (sfVector2f){i * 40.0f + 1, j * 40.0f + 1});
                 if (grid[i][j].is_mine == 1)
                     sfRectangleShape_setFillColor(rect, sfRed);
+                else if (grid[i][j].is_flagged == 1)
+                    sfRectangleShape_setFillColor(rect, sfGreen);
                 else
                     sfRectangleShape_setFillColor(rect, sfWhite);
                 sfRenderWindow_drawRectangleShape(window, rect, NULL);
-
             }
         }
         sfRenderWindow_display(window);
     }
     sfRectangleShape_destroy(rect);
-
-
-
     return 0;
 }
