@@ -6,6 +6,17 @@
 
 #include "../my.h"
 
+int draw_menu(sfRenderWindow *window, int game, creator_t *button, sfClock *clock)
+{
+    if (game == 0) {
+        sfRenderWindow_clear(window, sfBlack);
+        if (start_screen(window, button, clock) == 1)
+            return 1;
+        sfRenderWindow_display(window);
+    }
+    return 0;
+}
+
 int init_window(creator_t *button)
 {
     sfVideoMode mode = {1920, 1080, 32};
@@ -24,14 +35,11 @@ int init_window(creator_t *button)
                 sfRenderWindow_close(window);
             handle_event(&event, button, window, &game);
         }
-        if (game == 0) {
-            sfRenderWindow_clear(window, sfBlack);
-            if (start_screen(window, button, clock) == 1)
-                return 1;
-            sfRenderWindow_display(window);
-        }
-        lunch_difficulty(window, game, button);
-
+        if (draw_menu(window, game, button, clock) == 1)
+            return 1;
+        lunch_difficulty(window, &game, button);
+        if (game == 100)
+            break;
     }
     sfRenderWindow_destroy(window);
     destroy_button(button);
