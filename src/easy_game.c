@@ -17,7 +17,7 @@ typedef struct grid_t {
 } grid_t;
 
 
-void place_mine_on_grid(grid_t grid[EASY_SIZE][EASY_SIZE])
+static void place_mine_on_grid(grid_t grid[EASY_SIZE][EASY_SIZE])
 {
     int mine_placed = 0;
     int x = 0;
@@ -34,7 +34,7 @@ void place_mine_on_grid(grid_t grid[EASY_SIZE][EASY_SIZE])
     }
 }
 
-void init_grid(grid_t grid[EASY_SIZE][EASY_SIZE])
+static void init_grid(grid_t grid[EASY_SIZE][EASY_SIZE])
 {
     for (int i = 0; i < EASY_SIZE; i++){
         for (int j = 0; j < EASY_SIZE; j++){
@@ -44,6 +44,28 @@ void init_grid(grid_t grid[EASY_SIZE][EASY_SIZE])
         }
     }
     place_mine_on_grid(grid);
+}
+
+static void draw_easy_map(sfRectangleShape *rect, sfTexture *flag_text, sfRenderWindow *window, grid_t grid[EASY_SIZE][EASY_SIZE])
+{
+    for (int i = 0; i < EASY_SIZE; i++){
+        for (int j = 0; j < EASY_SIZE; j++){
+            sfRectangleShape_setPosition(rect, (sfVector2f){i * 40.0f + 1, j * 40.0f + 1});
+            if (grid[i][j].is_flagged == 1) {
+                sfRectangleShape_setTexture(rect, flag_text, sfTrue);
+                sfRectangleShape_setFillColor(rect, sfWhite);
+            }
+            else if (grid[i][j].is_mine == 1) {
+                sfRectangleShape_setTexture(rect, NULL, sfFalse);
+                sfRectangleShape_setFillColor(rect, sfRed);
+            }
+            else {
+                sfRectangleShape_setTexture(rect, NULL, sfFalse);
+                sfRectangleShape_setFillColor(rect, sfWhite);
+            }
+            sfRenderWindow_drawRectangleShape(window, rect, NULL);
+        }
+    }
 }
 
 int start_easy(sfRenderWindow *window, int *close)
@@ -81,24 +103,7 @@ int start_easy(sfRenderWindow *window, int *close)
         if (*close == 0)
             break;
         show_game_over_screen(window, &lose, event, &in_game);
-        for (int i = 0; i < EASY_SIZE; i++){
-            for (int j = 0; j < EASY_SIZE; j++){
-                sfRectangleShape_setPosition(rect, (sfVector2f){i * 40.0f + 1, j * 40.0f + 1});
-                if (grid[i][j].is_flagged == 1) {
-                    sfRectangleShape_setTexture(rect, flag_text, sfTrue);
-                    sfRectangleShape_setFillColor(rect, sfWhite);
-                }
-                else if (grid[i][j].is_mine == 1) {
-                    sfRectangleShape_setTexture(rect, NULL, sfFalse);
-                    sfRectangleShape_setFillColor(rect, sfRed);
-                }
-                else {
-                    sfRectangleShape_setTexture(rect, NULL, sfFalse);
-                    sfRectangleShape_setFillColor(rect, sfWhite);
-                }
-                sfRenderWindow_drawRectangleShape(window, rect, NULL);
-            }
-        }
+        draw_easy_map(rect, flag_text, window, grid);
         sfRenderWindow_display(window);
     }
     sfRectangleShape_destroy(rect);
