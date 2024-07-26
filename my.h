@@ -70,5 +70,8 @@ void show_game_over_screen(sfRenderWindow *window, int *lose, sfEvent event, int
 //init_number_text.c
 int init_number_text(sfTexture *number_text[]);
 
+//init_easy_grid.c
+void init_grid(grid_t grid[EASY_SIZE][EASY_SIZE]);
+
 
 #endif

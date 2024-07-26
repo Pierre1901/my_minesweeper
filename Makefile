@@ -13,7 +13,8 @@ SRC = 	src/main.c\
 		src/chose_difficulty.c\
 		src/easy_game.c\
 		src/game_over.c\
-		src/init_number_text.c
+		src/init_number_text.c\
+		src/init_easy_grid.c
 
 
 OBJ = $(SRC:.c=.o)

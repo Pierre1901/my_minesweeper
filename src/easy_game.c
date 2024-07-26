@@ -6,66 +6,6 @@
 
 #include "../my.h"
 
-
-
-
-static void place_mine_on_grid(grid_t grid[EASY_SIZE][EASY_SIZE])
-{
-    int mine_placed = 0;
-    int x = 0;
-    int y = 0;
-
-    srand(time(NULL));
-    while(mine_placed < MAX_EASY){
-        x = rand() % EASY_SIZE;
-        y = rand() % EASY_SIZE;
-        if (!grid[x][y].is_mine){
-            grid[x][y].is_mine = 1;
-            mine_placed++;
-        }
-    }
-}
-
-void count_mine(grid_t grid[EASY_SIZE][EASY_SIZE])
-{
-    int count;
-    int ni;
-    int nj;
-
-    for (int i = 0; i < EASY_SIZE; ++i) {
-        for (int j = 0; j < EASY_SIZE; ++j) {
-            if (grid[i][j].is_mine)
-                continue;
-            count = 0;
-            for (int k = -1; k <= 1; k++) {
-                for (int l = -1; l <= 1; l++) {
-                    ni = i + k;
-                    nj = j + l;
-                    if (ni >= 0 && ni < EASY_SIZE && nj >= 0 && nj < EASY_SIZE && grid[ni][nj].is_mine) {
-                        count++;
-                    }
-                }
-            }
-            grid[i][j].nearly_mine = count;
-        }
-    }
-}
-
-static void init_grid(grid_t grid[EASY_SIZE][EASY_SIZE])
-{
-    for (int i = 0; i < EASY_SIZE; i++){
-        for (int j = 0; j < EASY_SIZE; j++){
-            grid[i][j].is_mine = 0;
-            grid[i][j].is_flagged = 0;
-            grid[i][j].is_revealed = 0;
-            grid[i][j].nearly_mine = 0;
-        }
-    }
-    place_mine_on_grid(grid);
-    count_mine(grid);
-}
-
-
 static void draw_easy_map(sfRectangleShape *rect, sfTexture *flag_text, sfRenderWindow *window, grid_t grid[EASY_SIZE][EASY_SIZE], sfTexture *number_text[])
 {
 
