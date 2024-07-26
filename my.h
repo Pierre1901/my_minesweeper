@@ -16,7 +16,7 @@
 
 #define MAX 20
 #define EASY_SIZE 10
-#define MAX_EASY 1
+#define MAX_EASY 10
 
 
 typedef struct grid_t {
