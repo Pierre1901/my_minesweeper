@@ -51,12 +51,33 @@ void reveal_case(grid_t grid[EASY_SIZE][EASY_SIZE], int x, int y)
     }
 }
 
+int lose_easy_game(grid_t grid[EASY_SIZE][EASY_SIZE], int *lose)
+{
+    for (int i = 0; i < EASY_SIZE; i++){
+        for (int j = 0; j < EASY_SIZE; j++){
+            if (grid[i][j].is_revealed && grid[i][j].is_mine) {
+                *lose = 1;
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+
+void show_lose(int *lose, sfRectangleShape *rect, sfTexture *flag_text, sfRenderWindow *window, grid_t grid[EASY_SIZE][EASY_SIZE], sfTexture *number_text[])
+{
+    lose_easy_game(grid, lose);
+    if (*lose) {
+        draw_easy_map(rect, flag_text, window, grid, number_text);
+        sfRenderWindow_display(window);
+        sleep(2);
+    }
+}
+
 int start_easy(sfRenderWindow *window, int *close, sfTexture *number_text[])
 {
     int in_game = 1;
     int lose = 0;
-
-
 
     grid_t grid[EASY_SIZE][EASY_SIZE];
     init_grid(grid);
@@ -72,8 +93,9 @@ int start_easy(sfRenderWindow *window, int *close, sfTexture *number_text[])
         handle_events_in_easy_game(window, close, &lose, &in_game, grid, &event);
         if (*close == 0)
             break;
-        show_game_over_screen(window, &lose, event, &in_game);
+        show_lose(&lose, rect, flag_text, window, grid, number_text);
         draw_easy_map(rect, flag_text, window, grid, number_text);
+        show_game_over_screen(window, &lose, event, &in_game);
         sfRenderWindow_display(window);
     }
     sfRectangleShape_destroy(rect);
