@@ -23,6 +23,7 @@ typedef struct grid_t {
     int is_mine;
     int is_flagged;
     int is_revealed;
+    int nearly_mine;
 } grid_t;
 
 typedef struct button_s {
@@ -61,6 +62,7 @@ void lunch_difficulty(sfRenderWindow *window, int *game, creator_t *buttons);
 
 //easy_game.c
 int start_easy(sfRenderWindow *window, int *close);
+void reveal_case(grid_t grid[EASY_SIZE][EASY_SIZE], int x, int y);
 
 //game_over.c
 void show_game_over_screen(sfRenderWindow *window, int *lose, sfEvent event, int *in_game);

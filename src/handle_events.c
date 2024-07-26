@@ -43,10 +43,16 @@ void handle_events_in_easy_game(sfRenderWindow *window, int *close, int *lose, i
             *in_game = 0;
         if (event->type == sfEvtMouseButtonPressed){
             sfVector2i mouse_pos = sfMouse_getPositionRenderWindow(window);
-            int x = mouse_pos.x / 40.0f;
-            int y = mouse_pos.y / 40.0f;
-            if (event->mouseButton.button == sfMouseRight)
+            int x = mouse_pos.x / 40;
+            int y = mouse_pos.y / 40;
+            if (event->mouseButton.button == sfMouseRight && !grid[x][y].is_revealed)
                 grid[x][y].is_flagged = !grid[x][y].is_flagged;
+            if (event->mouseButton.button == sfMouseLeft) {
+                if (!grid[x][y].is_flagged) {
+                    reveal_case(grid, x, y);
+                }
+            }
         }
+
     }
 }
