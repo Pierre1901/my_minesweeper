@@ -61,11 +61,14 @@ void handle_events_in_easy_game(sfRenderWindow *window, int *close, int *lose, i
 int lunch_difficulty(sfRenderWindow *window, int *game, creator_t *buttons);
 
 //easy_game.c
-int start_easy(sfRenderWindow *window, int *close);
+int start_easy(sfRenderWindow *window, int *close, sfTexture *number_text[]);
 void reveal_case(grid_t grid[EASY_SIZE][EASY_SIZE], int x, int y);
 
 //game_over.c
 void show_game_over_screen(sfRenderWindow *window, int *lose, sfEvent event, int *in_game);
+
+//init_number_text.c
+int init_number_text(sfTexture *number_text[]);
 
 
 #endif

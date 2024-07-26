@@ -111,20 +111,12 @@ void reveal_case(grid_t grid[EASY_SIZE][EASY_SIZE], int x, int y)
     }
 }
 
-int start_easy(sfRenderWindow *window, int *close)
+int start_easy(sfRenderWindow *window, int *close, sfTexture *number_text[])
 {
     int in_game = 1;
     int lose = 0;
 
-    sfTexture *number_text[9];
-    for (int i = 0; i <= 4; ++i) {
-        char filename[20];
-        snprintf(filename, sizeof(filename), "ressources/%d.png", i);
-        number_text[i] = sfTexture_createFromFile(filename, NULL);
-        if (!number_text[i]) {
-            return 1;
-        }
-    }
+
 
     grid_t grid[EASY_SIZE][EASY_SIZE];
     init_grid(grid);
