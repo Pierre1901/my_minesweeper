@@ -74,6 +74,7 @@ static void draw_easy_map(sfRectangleShape *rect, sfTexture *flag_text, sfRender
             if (grid[i][j].is_flagged) {
                 sfRectangleShape_setTexture(rect, flag_text, sfTrue);
             } else if (grid[i][j].is_revealed) {
+                sfRectangleShape_setFillColor(rect, sfWhite);
                 if (grid[i][j].is_mine) {
                     sfRectangleShape_setTexture(rect, NULL, sfFalse);
                     sfRectangleShape_setFillColor(rect, sfRed);
@@ -113,7 +114,7 @@ int start_easy(sfRenderWindow *window, int *close)
     int lose = 0;
 
     sfTexture *number_text[9];
-    for (int i = 0; i <= 3; ++i) {
+    for (int i = 0; i <= 4; ++i) {
         char filename[20];
         snprintf(filename, sizeof(filename), "ressources/%d.png", i);
         number_text[i] = sfTexture_createFromFile(filename, NULL);
