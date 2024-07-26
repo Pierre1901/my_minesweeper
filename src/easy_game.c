@@ -74,6 +74,18 @@ void show_lose(int *lose, sfRectangleShape *rect, sfTexture *flag_text, sfRender
     }
 }
 
+
+int win_easy_game(grid_t grid[EASY_SIZE][EASY_SIZE])
+{
+    for (int i = 0; i < EASY_SIZE; i++) {
+        for (int j = 0; j < EASY_SIZE; j++) {
+           if (!grid[i][j].is_revealed && !grid[i][j].is_flagged)
+               return 0;
+        }
+    }
+    return 1;
+}
+
 int start_easy(sfRenderWindow *window, int *close, sfTexture *number_text[])
 {
     int in_game = 1;
@@ -92,6 +104,8 @@ int start_easy(sfRenderWindow *window, int *close, sfTexture *number_text[])
         sfRenderWindow_clear(window, sfBlack);
         handle_events_in_easy_game(window, close, &lose, &in_game, grid, &event);
         if (*close == 0)
+            break;
+        if (win_easy_game(grid) == 1)
             break;
         show_lose(&lose, rect, flag_text, window, grid, number_text);
         draw_easy_map(rect, flag_text, window, grid, number_text);
