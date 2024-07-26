@@ -58,7 +58,7 @@ void handle_event_in_menu(sfEvent *event, creator_t *button_creator, sfRenderWin
 void handle_events_in_easy_game(sfRenderWindow *window, int *close, int *lose, int *in_game, grid_t grid[EASY_SIZE][EASY_SIZE], sfEvent *event);
 
 //chose_difficulty.c
-void lunch_difficulty(sfRenderWindow *window, int *game, creator_t *buttons);
+int lunch_difficulty(sfRenderWindow *window, int *game, creator_t *buttons);
 
 //easy_game.c
 int start_easy(sfRenderWindow *window, int *close);

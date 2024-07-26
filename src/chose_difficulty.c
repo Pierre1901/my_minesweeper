@@ -6,12 +6,13 @@
 
 #include "../my.h"
 
-void lunch_difficulty(sfRenderWindow *window, int *game, creator_t *buttons)
+int lunch_difficulty(sfRenderWindow *window, int *game, creator_t *buttons)
 {
     if (*game == 1){
         int close = 1;
         sfRenderWindow_clear(window, sfBlack);
-        start_easy(window, &close);
+        if (start_easy(window, &close) == 1)
+            return 1;
         if (!close)
             *game = 100;
     }

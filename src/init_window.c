@@ -37,7 +37,8 @@ int init_window(creator_t *button)
         }
         if (draw_menu(window, game, button, clock) == 1)
             return 1;
-        lunch_difficulty(window, &game, button);
+        if (lunch_difficulty(window, &game, button) == 1)
+            return 1;
         if (game == 100)
             break;
     }

@@ -68,6 +68,9 @@ static void init_grid(grid_t grid[EASY_SIZE][EASY_SIZE])
 
 static void draw_easy_map(sfRectangleShape *rect, sfTexture *flag_text, sfRenderWindow *window, grid_t grid[EASY_SIZE][EASY_SIZE], sfTexture *number_text[])
 {
+
+    int mines_around;
+
     for (int i = 0; i < EASY_SIZE; i++) {
         for (int j = 0; j < EASY_SIZE; j++) {
             sfRectangleShape_setPosition(rect, (sfVector2f){i * 40.0f + 1, j * 40.0f + 1});
@@ -79,7 +82,7 @@ static void draw_easy_map(sfRectangleShape *rect, sfTexture *flag_text, sfRender
                     sfRectangleShape_setTexture(rect, NULL, sfFalse);
                     sfRectangleShape_setFillColor(rect, sfRed);
                 } else {
-                    int mines_around = grid[i][j].nearly_mine;
+                    mines_around = grid[i][j].nearly_mine;
                     sfRectangleShape_setTexture(rect, number_text[mines_around], sfTrue);
                 }
             } else {
