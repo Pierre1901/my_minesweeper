@@ -81,6 +81,8 @@ int win_easy_game(grid_t grid[EASY_SIZE][EASY_SIZE])
         for (int j = 0; j < EASY_SIZE; j++) {
            if (!grid[i][j].is_revealed && !grid[i][j].is_flagged)
                return 0;
+           if (!grid[i][j].is_mine && grid[i][j].is_flagged)
+               return 0;
         }
     }
     return 1;
