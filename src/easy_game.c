@@ -95,7 +95,7 @@ int start_easy(sfRenderWindow *window, int *close, sfTexture *number_text[])
             break;
         show_lose(&lose, rect, flag_text, window, grid, number_text);
         draw_easy_map(rect, flag_text, window, grid, number_text);
-        show_game_over_screen(window, &lose, event, &in_game);
+        show_game_over_screen(window, &lose, event, &in_game, close);
         sfRenderWindow_display(window);
     }
     sfRectangleShape_destroy(rect);
