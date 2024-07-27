@@ -23,10 +23,10 @@ static int show_name_of_game(sfRenderWindow *window)
 
 static int show_animate_background(sfRenderWindow *window, sfClock *clock)
 {
-    const int frame_width = 750;
-    const int frame_height = 422;
-    const int total_frames = 1;
-    const float time_per_frame = 0.2f;
+    int frame_width = 750;
+    int frame_height = 422;
+    int total_frames = 1;
+    float time_per_frame = 0.2f;
     sfTexture *texture = sfTexture_createFromFile("ressources/mine.png", NULL);
     sfTime time = sfClock_getElapsedTime(clock);
     float seconds = sfTime_asSeconds(time);

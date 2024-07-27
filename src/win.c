@@ -1,31 +1,30 @@
 /*
 ** my_minesweeper
 ** File description:
-** game_over.c
+** win.c
 */
 
 #include "../my.h"
 
-void show_game_over_screen(sfRenderWindow *window, int *lose, sfEvent event, int *in_game, int *close)
+void show_win_easy_screen(sfRenderWindow *window, int *win, sfEvent event, int *in_game, int *close)
 {
-    if (*lose) {
+    if (*win) {
         sfFont *font = sfFont_createFromFile("ressources/Championship.ttf");
         sfText *text = sfText_create();
         sfText_setPosition(text, (sfVector2f){200,200});
         sfText_setFont(text, font);
-        sfText_setString(text, "GAME OVER\nRESTART --> [R]\nQUIT --> [Q]");
-        while (*lose) {
+        sfText_setString(text, "YOU WIN !\nRESTART --> [R]\nQUIT --> [Q]");
+        while (*win) {
             sfRenderWindow_clear(window, sfBlack);
             sfRenderWindow_drawText(window, text, NULL);
             while (sfRenderWindow_pollEvent(window, &event)) {
                 if (event.type == sfEvtKeyPressed && event.key.code == sfKeyR) {
-                    *lose = 0;
+                    *win = 0;
                     *in_game = 0;
-
                 }
                 if (event.type == sfEvtKeyPressed && event.key.code == sfKeyQ || event.type == sfEvtClosed) {
                     *close = 0;
-                    *lose = 0;
+                    *win = 0;
                 }
             }
             sfRenderWindow_display(window);
@@ -34,4 +33,3 @@ void show_game_over_screen(sfRenderWindow *window, int *lose, sfEvent event, int
         sfText_destroy(text);
     }
 }
-
