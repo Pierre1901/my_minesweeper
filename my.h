@@ -16,7 +16,7 @@
 
 #define MAX 20
 #define EASY_SIZE 10
-#define MAX_EASY 10
+#define MAX_EASY 1
 
 
 typedef struct grid_t {
@@ -72,6 +72,9 @@ int init_number_text(sfTexture *number_text[]);
 
 //init_easy_grid.c
 void init_grid(grid_t grid[EASY_SIZE][EASY_SIZE]);
+
+//win.c
+void show_win_easy_screen(sfRenderWindow *window, int *win, sfEvent event, int *in_game, int *close);
 
 
 #endif
