@@ -22,7 +22,7 @@ void show_game_over_screen(sfRenderWindow *window, int *lose, sfEvent event, int
                     *lose = 0;
                     *in_game = 0;
                 }
-                if (event.type == sfEvtKeyPressed && event.key.code == sfKeyQ) {
+                if (event.type == sfEvtKeyPressed && event.key.code == sfKeyQ || event.type == sfEvtClosed) {
                     *close = 0;
                     *lose = 0;
                 }
