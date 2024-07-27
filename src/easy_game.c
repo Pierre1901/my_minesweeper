@@ -11,13 +11,12 @@ static void draw_easy_map(sfRectangleShape *rect, sfTexture *flag_text, sfRender
 
     int mines_around;
     sfVector2u window_size = sfRenderWindow_getSize(window);
-    float view_x = (window_size.x - EASY_SIZE * 40.0f) / 2.0f;
-    float view_y = (window_size.y - EASY_SIZE * 40.0f) / 2.0f;;
-
+    int view_x = (window_size.x - EASY_SIZE * 40.0f) / 2.0f;
+    int view_y = (window_size.y - EASY_SIZE * 40.0f) / 2.0f;
 
     for (int i = 0; i < EASY_SIZE; i++) {
         for (int j = 0; j < EASY_SIZE; j++) {
-            sfRectangleShape_setPosition(rect, (sfVector2f){i * 40.0f + 1, j * 40.0f + 1});
+            sfRectangleShape_setPosition(rect, (sfVector2f){i * 40.0f + view_x, j * 40.0f + view_y});
             if (grid[i][j].is_flagged) {
                 sfRectangleShape_setTexture(rect, flag_text, sfTrue);
             } else if (grid[i][j].is_revealed) {
