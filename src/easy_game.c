@@ -17,7 +17,7 @@ static void draw_easy_map(sfRectangleShape *rect, sfTexture *flag_text, sfRender
 
     for (int i = 0; i < EASY_SIZE; i++) {
         for (int j = 0; j < EASY_SIZE; j++) {
-            sfRectangleShape_setPosition(rect, (sfVector2f){i * 40.0f + view_x, j * 40.0f + view_y});
+            sfRectangleShape_setPosition(rect, (sfVector2f){i * 40.0f + 1, j * 40.0f + 1});
             if (grid[i][j].is_flagged) {
                 sfRectangleShape_setTexture(rect, flag_text, sfTrue);
             } else if (grid[i][j].is_revealed) {

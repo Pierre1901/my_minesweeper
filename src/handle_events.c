@@ -33,6 +33,8 @@ void handle_event_in_menu(sfEvent *event, creator_t *button_creator, sfRenderWin
 void handle_events_in_easy_game(sfRenderWindow *window, int *close, int *lose, int *in_game, grid_t grid[EASY_SIZE][EASY_SIZE], sfEvent *event)
 {
 
+
+
     while (sfRenderWindow_pollEvent(window, event)){
         if (event->type == sfEvtClosed || (event->type == sfEvtKeyPressed && event->key.code == sfKeyQ)) {
             *close = 0;
@@ -53,6 +55,9 @@ void handle_events_in_easy_game(sfRenderWindow *window, int *close, int *lose, i
                 }
             }
         }
-
+//        sfFloatRect visibleArea =
+//                {0.f, 0.f, (float)event->size.width, (float)event->size.height};
+//        if (event->type == sfEvtResized)
+//            sfRenderWindow_setView(window, sfView_createFromRect(visibleArea));
     }
 }
