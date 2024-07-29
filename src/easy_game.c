@@ -142,7 +142,8 @@ int start_easy(sfRenderWindow *window, int *close, sfTexture *number_text[])
             break;
         if (win_easy_game(grid) == 1)
             win = 1;
-        anim_background_in_easy(window, clock);
+        if (anim_background_in_easy(window, clock) == 1)
+            return 1;
         show_lose(&win, &lose, rect, flag_text, window, grid, number_text);
         draw_easy_map(rect, flag_text, window, grid, number_text);
         show_game_over_screen(window, &lose, event, &in_game, close);

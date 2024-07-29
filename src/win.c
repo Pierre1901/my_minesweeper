@@ -11,9 +11,10 @@ void show_win_easy_screen(sfRenderWindow *window, int *win, sfEvent event, int *
     if (*win) {
         sfFont *font = sfFont_createFromFile("ressources/Championship.ttf");
         sfText *text = sfText_create();
-        sfText_setPosition(text, (sfVector2f){200,200});
+        sfText_setPosition(text, (sfVector2f){600,200});
         sfText_setFont(text, font);
-        sfText_setString(text, "YOU WIN !\nRESTART --> [R]\nQUIT --> [Q]");
+        sfText_setString(text, "\tYOU WIN !\n\nRESTART --> [R]\n\nQUIT --> [Q]");
+        sfText_setCharacterSize(text, 86);
         while (*win) {
             sfRenderWindow_clear(window, sfBlack);
             sfRenderWindow_drawText(window, text, NULL);
