@@ -20,6 +20,9 @@ int lunch_difficulty(sfRenderWindow *window, int *game, creator_t *buttons)
             return 1;
         if (!close)
             *game = 100;
+        for (int i = 0; i < 5; i ++){
+            sfTexture_destroy(number_text[i]);
+        }
     }
     if (*game == 2) {
         int close = 1;
@@ -32,6 +35,10 @@ int lunch_difficulty(sfRenderWindow *window, int *game, creator_t *buttons)
             return 1;
         if (!close)
             *game = 100;
+        for (int i = 0; i < 5; i ++){
+            sfTexture_destroy(number_text[i]);
+        }
     }
+
     return 0;
 }
