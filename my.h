@@ -17,6 +17,8 @@
 #define MAX 20
 #define EASY_SIZE 10
 #define MAX_EASY 10
+#define HARD_SIZE 25
+#define MAX_HARD 75
 
 
 typedef struct grid_t {
@@ -56,6 +58,7 @@ int start_screen(sfRenderWindow *window, creator_t *button, sfClock *clock);
 //handle_events.c
 void handle_event_in_menu(sfEvent *event, creator_t *button_creator, sfRenderWindow *window, int *game);
 void handle_events_in_easy_game(sfRenderWindow *window, int *close, int *lose, int *in_game, grid_t grid[EASY_SIZE][EASY_SIZE], sfEvent *event);
+void handle_events_in_hard_game(sfRenderWindow *window, int *close, int *lose, int *in_game, grid_t grid[HARD_SIZE][HARD_SIZE], sfEvent *event);
 
 //chose_difficulty.c
 int lunch_difficulty(sfRenderWindow *window, int *game, creator_t *buttons);
@@ -75,6 +78,13 @@ void init_grid(grid_t grid[EASY_SIZE][EASY_SIZE]);
 
 //win.c
 void show_win_easy_screen(sfRenderWindow *window, int *win, sfEvent event, int *in_game, int *close);
+
+//init_hard_grid.c
+void init_grid_in_hard(grid_t grid[HARD_SIZE][HARD_SIZE]);
+
+//hard_game.c
+void reveal_case_in_hard(grid_t grid[HARD_SIZE][HARD_SIZE], int x, int y);
+int start_hard(sfRenderWindow *window, int *close, sfTexture *number_text[]);
 
 
 #endif

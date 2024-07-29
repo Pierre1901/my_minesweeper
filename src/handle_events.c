@@ -66,3 +66,40 @@ void handle_events_in_easy_game(sfRenderWindow *window, int *close, int *lose, i
             sfRenderWindow_setView(window, sfView_createFromRect(visibleArea));
     }
 }
+
+void handle_events_in_hard_game(sfRenderWindow *window, int *close, int *lose, int *in_game, grid_t grid[HARD_SIZE][HARD_SIZE], sfEvent *event)
+{
+    int x;
+    int y;
+    int view_x;
+    int view_y;
+
+    while (sfRenderWindow_pollEvent(window, event)){
+        if (event->type == sfEvtClosed || (event->type == sfEvtKeyPressed && event->key.code == sfKeyQ))
+            *close = 0;
+        if (event->type == sfEvtKeyPressed && event->key.code == sfKeyS)
+            *lose = 1;
+        if (event->type == sfEvtKeyPressed && event->key.code == sfKeyR)
+            *in_game = 0;
+        if (event->type == sfEvtMouseButtonPressed) {
+            sfVector2u window_size = sfRenderWindow_getSize(window);
+            sfVector2i mouse_pos = sfMouse_getPositionRenderWindow(window);
+            view_x = (window_size.x - HARD_SIZE * 40.0f) / 2.0f;
+            view_y = (window_size.y - HARD_SIZE * 40.0f) / 2.0f;
+            x = (mouse_pos.x - view_x) / 40;
+            y = (mouse_pos.y - view_y) / 40;
+            if (x >= 0 && x < HARD_SIZE && y >= 0 && y < HARD_SIZE) {
+                if (event->mouseButton.button == sfMouseRight && !grid[x][y].is_revealed)
+                    grid[x][y].is_flagged = !grid[x][y].is_flagged;
+                if (event->mouseButton.button == sfMouseLeft) {
+                    if (!grid[x][y].is_flagged)
+                        reveal_case_in_hard(grid, x, y);
+                }
+            }
+        }
+        sfFloatRect visibleArea =
+                {0.f, 0.f, (float)event->size.width, (float)event->size.height};
+        if (event->type == sfEvtResized)
+            sfRenderWindow_setView(window, sfView_createFromRect(visibleArea));
+    }
+}
