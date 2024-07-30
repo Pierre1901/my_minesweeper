@@ -30,23 +30,22 @@ void handle_event_in_menu(sfEvent *event, creator_t *button_creator, sfRenderWin
         sfRenderWindow_setView(window, sfView_createFromRect(visibleArea));
 }
 
-void handle_events_in_easy_game(sfRenderWindow *window, int *close, int *lose, int *in_game, grid_t grid[EASY_SIZE][EASY_SIZE], sfEvent *event, int *menu)
+void handle_events_in_easy_game(sfRenderWindow *window, grid_t grid[EASY_SIZE][EASY_SIZE], sfEvent *event, mine_game_t *mine)
 {
     int x;
     int y;
     int view_x;
     int view_y;
- if (event->type == sfEvtKeyPressed && event->key.code == sfKeyR)
-            *in_game = 0;
+
     while (sfRenderWindow_pollEvent(window, event)){
         if (event->type == sfEvtClosed || (event->type == sfEvtKeyPressed && event->key.code == sfKeyQ))
-            *close = 0;
+            mine->close = 0;
         if (event->type == sfEvtKeyPressed && event->key.code == sfKeyS)
-            *lose = 1;
+            mine->lose = 1;
         if (event->type == sfEvtKeyPressed && event->key.code == sfKeyR)
-            *in_game = 0;
+            mine->in_game = 0;
         if (event->type == sfEvtKeyPressed && event->key.code == sfKeyM)
-            *menu = 1;
+            mine->menu = 1;
         if (event->type == sfEvtMouseButtonPressed) {
             sfVector2u window_size = sfRenderWindow_getSize(window);
             sfVector2i mouse_pos = sfMouse_getPositionRenderWindow(window);
@@ -70,7 +69,7 @@ void handle_events_in_easy_game(sfRenderWindow *window, int *close, int *lose, i
     }
 }
 
-void handle_events_in_hard_game(sfRenderWindow *window, int *close, int *lose, int *in_game, grid_t grid[HARD_SIZE][HARD_SIZE], sfEvent *event, int *menu)
+void handle_events_in_hard_game(sfRenderWindow *window, grid_t grid[HARD_SIZE][HARD_SIZE], sfEvent *event, mine_game_t *mine)
 {
     int x;
     int y;
@@ -79,13 +78,13 @@ void handle_events_in_hard_game(sfRenderWindow *window, int *close, int *lose, i
 
     while (sfRenderWindow_pollEvent(window, event)){
         if (event->type == sfEvtClosed || (event->type == sfEvtKeyPressed && event->key.code == sfKeyQ))
-            *close = 0;
+            mine->close = 0;
         if (event->type == sfEvtKeyPressed && event->key.code == sfKeyS)
-            *lose = 1;
+            mine->lose = 1;
         if (event->type == sfEvtKeyPressed && event->key.code == sfKeyR)
-            *in_game = 0;
+            mine->in_game = 0;
         if (event->type == sfEvtKeyPressed && event->key.code == sfKeyM)
-            *menu = 1;
+            mine->menu = 1;
         if (event->type == sfEvtMouseButtonPressed) {
             sfVector2u window_size = sfRenderWindow_getSize(window);
             sfVector2i mouse_pos = sfMouse_getPositionRenderWindow(window);

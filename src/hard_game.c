@@ -54,13 +54,13 @@ void reveal_case_in_hard(grid_t grid[HARD_SIZE][HARD_SIZE], int x, int y)
     }
 }
 
-int lose_hard_game(grid_t grid[HARD_SIZE][HARD_SIZE], int *lose, int *win)
+int lose_hard_game(grid_t grid[HARD_SIZE][HARD_SIZE], mine_game_t *mine)
 {
     for (int i = 0; i < HARD_SIZE; i++){
         for (int j = 0; j < HARD_SIZE; j++){
             if (grid[i][j].is_revealed && grid[i][j].is_mine) {
-                *lose = 1;
-                *win = 0;
+                mine->lose = 1;
+                mine->win = 0;
                 return 1;
             }
         }
@@ -68,10 +68,10 @@ int lose_hard_game(grid_t grid[HARD_SIZE][HARD_SIZE], int *lose, int *win)
     return 0;
 }
 
-void show_lose_in_hard(int *win,int *lose, sfRectangleShape *rect, sfTexture *flag_text, sfRenderWindow *window, grid_t grid[HARD_SIZE][HARD_SIZE], sfTexture *number_text[])
+void show_lose_in_hard(sfRectangleShape *rect, sfTexture *flag_text, sfRenderWindow *window, grid_t grid[HARD_SIZE][HARD_SIZE], sfTexture *number_text[], mine_game_t *mine)
 {
-    lose_hard_game(grid, lose, win);
-    if (*lose) {
+    lose_hard_game(grid, mine);
+    if (mine->lose) {
         draw_hard_map(rect, flag_text, window, grid, number_text);
         sfRenderWindow_display(window);
         sleep(2);
@@ -120,12 +120,8 @@ int anim_background_in_hard(sfRenderWindow *window, sfClock *clock)
     return 0;
 }
 
-int start_hard(sfRenderWindow *window, int *close, sfTexture *number_text[], int *menu)
+int start_hard(sfRenderWindow *window, sfTexture *number_text[], mine_game_t *mine)
 {
-    int in_game = 1;
-    int lose = 0;
-    int win = 0;
-
     grid_t grid[HARD_SIZE][HARD_SIZE];
     init_grid_in_hard(grid);
     sfRectangleShape *rect = sfRectangleShape_create();
@@ -135,21 +131,21 @@ int start_hard(sfRenderWindow *window, int *close, sfTexture *number_text[], int
     sfClock *clock = sfClock_create();
     if (!flag_text)
         return 1;
-    while (in_game && *close){
+    while (mine->in_game && mine->close){
         sfRenderWindow_clear(window, sfBlack);
-        handle_events_in_hard_game(window, close, &lose, &in_game, grid, &event, menu);
-        if (*menu)
+        handle_events_in_hard_game(window, grid, &event, mine);
+        if (mine->menu)
             break;
-        if (*close == 0)
+        if (mine->close == 0)
             break;
         if (win_hard_game(grid) == 1)
-            win = 1;
+            mine->win = 1;
         if (anim_background_in_hard(window, clock) == 1)
             return 1;
-        show_lose_in_hard(&win, &lose, rect, flag_text, window, grid, number_text);
+        show_lose_in_hard(rect, flag_text, window, grid, number_text, mine);
         draw_hard_map(rect, flag_text, window, grid, number_text);
-        show_game_over_screen(window, &lose, event, &in_game, close);
-        show_win_easy_screen(window, &win, event, &in_game, close);
+        show_game_over_screen(window, event, mine);
+        show_win_easy_screen(window, event, mine);
         sfRenderWindow_display(window);
     }
     sfRectangleShape_destroy(rect);

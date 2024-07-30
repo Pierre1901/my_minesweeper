@@ -37,6 +37,13 @@ typedef struct button_s {
     int view;
 } button_s;
 
+typedef struct mine_game_t {
+    int in_game;
+    int lose;
+    int win;
+    int close;
+    int menu;
+} mine_game_t;
 
 typedef struct creator_t {
     button_s *button[MAX];
@@ -57,18 +64,19 @@ int start_screen(sfRenderWindow *window, creator_t *button, sfClock *clock);
 
 //handle_events.c
 void handle_event_in_menu(sfEvent *event, creator_t *button_creator, sfRenderWindow *window, int *game);
-void handle_events_in_easy_game(sfRenderWindow *window, int *close, int *lose, int *in_game, grid_t grid[EASY_SIZE][EASY_SIZE], sfEvent *event, int *menu);
-void handle_events_in_hard_game(sfRenderWindow *window, int *close, int *lose, int *in_game, grid_t grid[HARD_SIZE][HARD_SIZE], sfEvent *event, int *menu);
+void handle_events_in_easy_game(sfRenderWindow *window, grid_t grid[EASY_SIZE][EASY_SIZE], sfEvent *event, mine_game_t *mine);
+void handle_events_in_hard_game(sfRenderWindow *window, grid_t grid[HARD_SIZE][HARD_SIZE], sfEvent *event, mine_game_t *mine);
 
 //chose_difficulty.c
 int lunch_difficulty(sfRenderWindow *window, int *game, creator_t *buttons);
 
 //easy_game.c
-int start_easy(sfRenderWindow *window, int *close, sfTexture *number_text[], int *menu);
+int start_easy(sfRenderWindow *window, sfTexture *number_text[], mine_game_t *mine);
 void reveal_case(grid_t grid[EASY_SIZE][EASY_SIZE], int x, int y);
 
 //game_over.c
-void show_game_over_screen(sfRenderWindow *window, int *lose, sfEvent event, int *in_game, int *close);
+void show_game_over_screen(sfRenderWindow *window, sfEvent event, mine_game_t *mine);
+void show_game_over_screen_in_hard(sfRenderWindow *window, int *lose, sfEvent event, int *in_game, int *close);
 
 //init_number_text.c
 int init_number_text(sfTexture *number_text[]);
@@ -77,14 +85,14 @@ int init_number_text(sfTexture *number_text[]);
 void init_grid(grid_t grid[EASY_SIZE][EASY_SIZE]);
 
 //win.c
-void show_win_easy_screen(sfRenderWindow *window, int *win, sfEvent event, int *in_game, int *close);
+void show_win_easy_screen(sfRenderWindow *window, sfEvent event, mine_game_t *mine);
 
 //init_hard_grid.c
 void init_grid_in_hard(grid_t grid[HARD_SIZE][HARD_SIZE]);
 
 //hard_game.c
 void reveal_case_in_hard(grid_t grid[HARD_SIZE][HARD_SIZE], int x, int y);
-int start_hard(sfRenderWindow *window, int *close, sfTexture *number_text[], int *menu);
+int start_hard(sfRenderWindow *window, sfTexture *number_text[], mine_game_t *mine);
 
 
 #endif

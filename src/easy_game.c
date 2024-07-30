@@ -54,13 +54,13 @@ void reveal_case(grid_t grid[EASY_SIZE][EASY_SIZE], int x, int y)
     }
 }
 
-int lose_easy_game(grid_t grid[EASY_SIZE][EASY_SIZE], int *lose, int *win)
+int lose_easy_game(grid_t grid[EASY_SIZE][EASY_SIZE], mine_game_t *mine)
 {
     for (int i = 0; i < EASY_SIZE; i++){
         for (int j = 0; j < EASY_SIZE; j++){
             if (grid[i][j].is_revealed && grid[i][j].is_mine) {
-                *lose = 1;
-                *win = 0;
+                mine->lose = 1;
+                mine->win = 0;
                 return 1;
             }
         }
@@ -68,10 +68,10 @@ int lose_easy_game(grid_t grid[EASY_SIZE][EASY_SIZE], int *lose, int *win)
     return 0;
 }
 
-void show_lose(int *win,int *lose, sfRectangleShape *rect, sfTexture *flag_text, sfRenderWindow *window, grid_t grid[EASY_SIZE][EASY_SIZE], sfTexture *number_text[])
+void show_lose(sfRectangleShape *rect, sfTexture *flag_text, sfRenderWindow *window, grid_t grid[EASY_SIZE][EASY_SIZE], sfTexture *number_text[], mine_game_t *mine)
 {
-    lose_easy_game(grid, lose, win);
-    if (*lose) {
+    lose_easy_game(grid, mine);
+    if (mine->lose) {
         draw_easy_map(rect, flag_text, window, grid, number_text);
         sfRenderWindow_display(window);
         sleep(2);
@@ -120,12 +120,8 @@ int anim_background_in_easy(sfRenderWindow *window, sfClock *clock)
     return 0;
 }
 
-int start_easy(sfRenderWindow *window, int *close, sfTexture *number_text[], int *menu)
+int start_easy(sfRenderWindow *window, sfTexture *number_text[], mine_game_t *mine)
 {
-    int in_game = 1;
-    int lose = 0;
-    int win = 0;
-
     grid_t grid[EASY_SIZE][EASY_SIZE];
     init_grid(grid);
     sfRectangleShape *rect = sfRectangleShape_create();
@@ -135,21 +131,21 @@ int start_easy(sfRenderWindow *window, int *close, sfTexture *number_text[], int
     sfClock *clock = sfClock_create();
     if (!flag_text)
         return 1;
-    while (in_game && *close){
+    while (mine->in_game && mine->close){
         sfRenderWindow_clear(window, sfBlack);
-        handle_events_in_easy_game(window, close, &lose, &in_game, grid, &event, menu);
-        if (*menu == 1)
+        handle_events_in_easy_game(window, grid, &event, mine);
+        if (mine->menu == 1)
             break;
-        if (*close == 0)
+        if (mine->close == 0)
             break;
         if (win_easy_game(grid) == 1)
-            win = 1;
+            mine->win = 1;
         if (anim_background_in_easy(window, clock) == 1)
             return 1;
-        show_lose(&win, &lose, rect, flag_text, window, grid, number_text);
+        show_lose(rect, flag_text, window, grid, number_text, mine);
         draw_easy_map(rect, flag_text, window, grid, number_text);
-        show_game_over_screen(window, &lose, event, &in_game, close);
-        show_win_easy_screen(window, &win, event, &in_game, close);
+        show_game_over_screen(window, event, mine);
+        show_win_easy_screen(window, event, mine);
         sfRenderWindow_display(window);
     }
     sfRectangleShape_destroy(rect);
