@@ -120,7 +120,7 @@ int anim_background_in_easy(sfRenderWindow *window, sfClock *clock)
     return 0;
 }
 
-int start_easy(sfRenderWindow *window, int *close, sfTexture *number_text[])
+int start_easy(sfRenderWindow *window, int *close, sfTexture *number_text[], int *menu)
 {
     int in_game = 1;
     int lose = 0;
@@ -137,7 +137,9 @@ int start_easy(sfRenderWindow *window, int *close, sfTexture *number_text[])
         return 1;
     while (in_game && *close){
         sfRenderWindow_clear(window, sfBlack);
-        handle_events_in_easy_game(window, close, &lose, &in_game, grid, &event);
+        handle_events_in_easy_game(window, close, &lose, &in_game, grid, &event, menu);
+        if (*menu == 1)
+            break;
         if (*close == 0)
             break;
         if (win_easy_game(grid) == 1)
