@@ -18,6 +18,7 @@ SRC = 	src/main.c\
 		src/init_hard_grid.c\
 		src/hard_game.c\
 		src/win.c\
+		src/button_state.c\
 
 
 OBJ = $(SRC:.c=.o)

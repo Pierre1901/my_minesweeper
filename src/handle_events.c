@@ -38,7 +38,6 @@ void handle_events_in_easy_game(sfRenderWindow *window, grid_t grid[EASY_SIZE][E
     int view_y;
 
     while (sfRenderWindow_pollEvent(window, event)){
-
         if (event->type == sfEvtClosed || (event->type == sfEvtKeyPressed && event->key.code == sfKeyQ))
             mine->close = 0;
         if (event->type == sfEvtKeyPressed && event->key.code == sfKeyS)
@@ -71,12 +70,7 @@ void handle_events_in_easy_game(sfRenderWindow *window, grid_t grid[EASY_SIZE][E
             for (int i = 0; i < button->count; i++) {
                 if (button->button[2]->is_clicked(button->button[2], event->mouseButton)) {
                     mine->menu = 1;
-                    button->button[2]->is_actif = 0;
-                    button->button[2]->view = 0;
-                    button->button[0]->is_actif = 1;
-                    button->button[0]->view = 1;
-                    button->button[1]->is_actif = 1;
-                    button->button[1]->view = 1;
+                    button_state_game_to_menu(button);
                 }
             }
         }

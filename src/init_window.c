@@ -29,8 +29,7 @@ int init_window(creator_t *button)
     if (!window)
         return 1;
     create_all_buttons(button);
-    button->button[2]->view = 0;
-    button->button[2]->is_actif = 0;
+    init_button_state(button);
     while (sfRenderWindow_isOpen(window)) {
         while (sfRenderWindow_pollEvent(window, &event)){
             if (event.type == sfEvtClosed)

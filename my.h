@@ -94,5 +94,10 @@ void init_grid_in_hard(grid_t grid[HARD_SIZE][HARD_SIZE]);
 void reveal_case_in_hard(grid_t grid[HARD_SIZE][HARD_SIZE], int x, int y);
 int start_hard(sfRenderWindow *window, sfTexture *number_text[], mine_game_t *mine);
 
+//button_state.c
+void button_state_menu_to_game(creator_t *button);
+void button_state_game_to_menu(creator_t *button);
+void init_button_state(creator_t *button);
+
 
 #endif

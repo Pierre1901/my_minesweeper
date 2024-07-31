@@ -129,12 +129,7 @@ int start_easy(sfRenderWindow *window, sfTexture *number_text[], mine_game_t *mi
     sfEvent event;
     sfTexture *flag_text = sfTexture_createFromFile("ressources/flag.png", NULL);
     sfClock *clock = sfClock_create();
-    button->button[0]->is_actif = 0;
-    button->button[0]->view = 0;
-    button->button[1]->is_actif = 0;
-    button->button[1]->view = 0;
-    button->button[2]->is_actif = 1;
-    button->button[2]->view = 1;
+    button_state_menu_to_game(button);
     if (!flag_text)
         return 1;
     while (mine->in_game && mine->close){
