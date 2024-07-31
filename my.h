@@ -64,14 +64,14 @@ int start_screen(sfRenderWindow *window, creator_t *button, sfClock *clock);
 
 //handle_events.c
 void handle_event_in_menu(sfEvent *event, creator_t *button_creator, sfRenderWindow *window, int *game);
-void handle_events_in_easy_game(sfRenderWindow *window, grid_t grid[EASY_SIZE][EASY_SIZE], sfEvent *event, mine_game_t *mine);
+void handle_events_in_easy_game(sfRenderWindow *window, grid_t grid[EASY_SIZE][EASY_SIZE], sfEvent *event, mine_game_t *mine, creator_t *button);
 void handle_events_in_hard_game(sfRenderWindow *window, grid_t grid[HARD_SIZE][HARD_SIZE], sfEvent *event, mine_game_t *mine);
 
 //chose_difficulty.c
 int lunch_difficulty(sfRenderWindow *window, int *game, creator_t *buttons);
 
 //easy_game.c
-int start_easy(sfRenderWindow *window, sfTexture *number_text[], mine_game_t *mine);
+int start_easy(sfRenderWindow *window, sfTexture *number_text[], mine_game_t *mine, creator_t *button);
 void reveal_case(grid_t grid[EASY_SIZE][EASY_SIZE], int x, int y);
 
 //game_over.c

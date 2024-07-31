@@ -7,7 +7,7 @@
 #include "../my.h"
 
 
-int lunch_difficulty(sfRenderWindow *window, int *game, creator_t *buttons)
+int lunch_difficulty(sfRenderWindow *window, int *game, creator_t *button)
 {
     if (*game == 1) {
         mine_game_t mine = {1,0,0,1,0};
@@ -16,7 +16,7 @@ int lunch_difficulty(sfRenderWindow *window, int *game, creator_t *buttons)
         if (init_number_text(number_text) == 1)
             return 1;
         sfRenderWindow_clear(window, sfBlack);
-        if (start_easy(window, number_text, &mine) == 1)
+        if (start_easy(window, number_text, &mine, button) == 1)
             return 1;
         if (!mine.close)
             *game = 100;

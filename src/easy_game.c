@@ -120,7 +120,7 @@ int anim_background_in_easy(sfRenderWindow *window, sfClock *clock)
     return 0;
 }
 
-int start_easy(sfRenderWindow *window, sfTexture *number_text[], mine_game_t *mine)
+int start_easy(sfRenderWindow *window, sfTexture *number_text[], mine_game_t *mine, creator_t *button)
 {
     grid_t grid[EASY_SIZE][EASY_SIZE];
     init_grid(grid);
@@ -129,11 +129,17 @@ int start_easy(sfRenderWindow *window, sfTexture *number_text[], mine_game_t *mi
     sfEvent event;
     sfTexture *flag_text = sfTexture_createFromFile("ressources/flag.png", NULL);
     sfClock *clock = sfClock_create();
+    button->button[0]->is_actif = 0;
+    button->button[0]->view = 0;
+    button->button[1]->is_actif = 0;
+    button->button[1]->view = 0;
+    button->button[2]->is_actif = 1;
+    button->button[2]->view = 1;
     if (!flag_text)
         return 1;
     while (mine->in_game && mine->close){
         sfRenderWindow_clear(window, sfBlack);
-        handle_events_in_easy_game(window, grid, &event, mine);
+        handle_events_in_easy_game(window, grid, &event, mine, button);
         if (mine->menu == 1)
             break;
         if (mine->close == 0)
@@ -146,6 +152,7 @@ int start_easy(sfRenderWindow *window, sfTexture *number_text[], mine_game_t *mi
         draw_easy_map(rect, flag_text, window, grid, number_text);
         show_game_over_screen(window, event, mine);
         show_win_easy_screen(window, event, mine);
+        draw_button(button, window);
         sfRenderWindow_display(window);
     }
     sfRectangleShape_destroy(rect);

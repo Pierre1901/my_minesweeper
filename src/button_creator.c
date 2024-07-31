@@ -69,7 +69,7 @@ void create_and_add_button(creator_t *button_creator,
     new_button->rect = sfRectangleShape_create();
     new_button->is_clicked = is_button_clicked;
     new_button->is_hover = is_button_hover;
-    new_button->is_actif = 0;
+    new_button->is_actif = 1;
     new_button->view = 1;
     sfRectangleShape_setSize(new_button->rect, size);
     sfRectangleShape_setPosition(new_button->rect, position);
@@ -85,6 +85,8 @@ int create_all_buttons(creator_t *button_creator)
                           (sfVector2f){700, 80}, (sfVector2f){500, 100});
     create_and_add_button(button_creator,
                           (sfVector2f){700, 200}, (sfVector2f){500, 100});
+    create_and_add_button(button_creator,
+                          (sfVector2f){0, 0}, (sfVector2f){500, 100});
 
 
     return 0;

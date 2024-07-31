@@ -10,10 +10,10 @@ void handle_event_in_menu(sfEvent *event, creator_t *button_creator, sfRenderWin
 {
     if (event->type == sfEvtMouseButtonPressed) {
         for (int i = 0; i < button_creator->count; i++) {
-            if (button_creator->button[0]->is_clicked(button_creator->button[0], event->mouseButton))
-                *game = 1;
-            if (button_creator->button[1]->is_clicked(button_creator->button[1], event->mouseButton))
-                *game = 2;
+                if (button_creator->button[0]->is_clicked(button_creator->button[0], event->mouseButton))
+                    *game = 1;
+                if (button_creator->button[1]->is_clicked(button_creator->button[1], event->mouseButton))
+                    *game = 2;
         }
     }
     if (event->type == sfEvtMouseMoved) {
@@ -30,7 +30,7 @@ void handle_event_in_menu(sfEvent *event, creator_t *button_creator, sfRenderWin
         sfRenderWindow_setView(window, sfView_createFromRect(visibleArea));
 }
 
-void handle_events_in_easy_game(sfRenderWindow *window, grid_t grid[EASY_SIZE][EASY_SIZE], sfEvent *event, mine_game_t *mine)
+void handle_events_in_easy_game(sfRenderWindow *window, grid_t grid[EASY_SIZE][EASY_SIZE], sfEvent *event, mine_game_t *mine, creator_t *button)
 {
     int x;
     int y;
@@ -38,6 +38,7 @@ void handle_events_in_easy_game(sfRenderWindow *window, grid_t grid[EASY_SIZE][E
     int view_y;
 
     while (sfRenderWindow_pollEvent(window, event)){
+
         if (event->type == sfEvtClosed || (event->type == sfEvtKeyPressed && event->key.code == sfKeyQ))
             mine->close = 0;
         if (event->type == sfEvtKeyPressed && event->key.code == sfKeyS)
@@ -66,6 +67,27 @@ void handle_events_in_easy_game(sfRenderWindow *window, grid_t grid[EASY_SIZE][E
                 {0.f, 0.f, (float)event->size.width, (float)event->size.height};
         if (event->type == sfEvtResized)
             sfRenderWindow_setView(window, sfView_createFromRect(visibleArea));
+        if (event->type == sfEvtMouseButtonPressed) {
+            for (int i = 0; i < button->count; i++) {
+                if (button->button[2]->is_clicked(button->button[2], event->mouseButton)) {
+                    mine->menu = 1;
+                    button->button[2]->is_actif = 0;
+                    button->button[2]->view = 0;
+                    button->button[0]->is_actif = 1;
+                    button->button[0]->view = 1;
+                    button->button[1]->is_actif = 1;
+                    button->button[1]->view = 1;
+                }
+            }
+        }
+        if (event->type == sfEvtMouseMoved) {
+            for (int i = 0; i < button->count; i++) {
+                if (button->button[i]->is_hover(button->button[i], event->mouseMove))
+                    sfRectangleShape_setOutlineThickness(button->button[i]->rect, 3.0f);
+                else
+                    sfRectangleShape_setOutlineThickness(button->button[i]->rect, 1.0f);
+            }
+        }
     }
 }
 
