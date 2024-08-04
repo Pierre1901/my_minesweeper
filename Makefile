@@ -19,7 +19,7 @@ SRC = 	src/main.c\
 		src/hard_game.c\
 		src/win.c\
 		src/button_state.c\
-
+		src/init_game_text.c\
 
 OBJ = $(SRC:.c=.o)
 

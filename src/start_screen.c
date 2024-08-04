@@ -43,19 +43,14 @@ static int show_animate_background(sfRenderWindow *window, sfClock *clock)
     return 0;
 }
 
-int start_screen(sfRenderWindow *window, creator_t *button, sfClock *clock)
+int start_screen(sfRenderWindow *window, creator_t *button, sfClock *clock, texture_t *texture)
 {
-    sfTexture *texture = sfTexture_createFromFile("ressources/easy_button.png", NULL);
-    sfTexture *texture_hard = sfTexture_createFromFile("ressources/hard_button.png", NULL);
-
-    if (!texture || !texture_hard)
-        return 1;
-    sfRectangleShape_setTexture(button->button[0]->rect, texture, sfTrue);
-    sfRectangleShape_setTexture(button->button[1]->rect, texture_hard, sfTrue);
+    sfRectangleShape_setTexture(button->button[0]->rect, texture->easy_text, sfTrue);
+    sfRectangleShape_setTexture(button->button[1]->rect, texture->hard_text, sfTrue);
+    sfRectangleShape_setTexture(button->button[2]->rect, texture->arrow_text, sfTrue);
     show_animate_background(window, clock);
     draw_button(button, window);
     if (show_name_of_game(window) == 1)
         return 1;
-    sfTexture_destroy(texture);
     return 0;
 }

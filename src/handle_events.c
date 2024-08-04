@@ -44,8 +44,10 @@ void handle_events_in_easy_game(sfRenderWindow *window, grid_t grid[EASY_SIZE][E
             mine->lose = 1;
         if (event->type == sfEvtKeyPressed && event->key.code == sfKeyR)
             mine->in_game = 0;
-        if (event->type == sfEvtKeyPressed && event->key.code == sfKeyM)
+        if (event->type == sfEvtKeyPressed && event->key.code == sfKeyM) {
             mine->menu = 1;
+            button_state_game_to_menu(button);
+        }
         if (event->type == sfEvtMouseButtonPressed) {
             sfVector2u window_size = sfRenderWindow_getSize(window);
             sfVector2i mouse_pos = sfMouse_getPositionRenderWindow(window);
@@ -75,11 +77,11 @@ void handle_events_in_easy_game(sfRenderWindow *window, grid_t grid[EASY_SIZE][E
             }
         }
         if (event->type == sfEvtMouseMoved) {
-            for (int i = 0; i < button->count; i++) {
+            for (int i = 2; i < button->count; i++) {
                 if (button->button[i]->is_hover(button->button[i], event->mouseMove))
                     sfRectangleShape_setOutlineThickness(button->button[i]->rect, 3.0f);
                 else
-                    sfRectangleShape_setOutlineThickness(button->button[i]->rect, 1.0f);
+                    sfRectangleShape_setOutlineThickness(button->button[i]->rect, 0.0f);
             }
         }
     }

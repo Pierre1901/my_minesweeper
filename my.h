@@ -50,6 +50,12 @@ typedef struct creator_t {
     int count;
 } creator_t;
 
+typedef struct texture_t {
+    sfTexture  *easy_text;
+    sfTexture *hard_text;
+    sfTexture *arrow_text;
+} texture_t;
+
 //init_window.c
 int init_window(creator_t *button);
 
@@ -60,7 +66,7 @@ void draw_button(creator_t *button_creator, sfRenderWindow *window);
 void destroy_button(creator_t *button_creator);
 
 //start_screen.c
-int start_screen(sfRenderWindow *window, creator_t *button, sfClock *clock);
+int start_screen(sfRenderWindow *window, creator_t *button, sfClock *clock, texture_t *texture);
 
 //handle_events.c
 void handle_event_in_menu(sfEvent *event, creator_t *button_creator, sfRenderWindow *window, int *game);
@@ -98,6 +104,9 @@ int start_hard(sfRenderWindow *window, sfTexture *number_text[], mine_game_t *mi
 void button_state_menu_to_game(creator_t *button);
 void button_state_game_to_menu(creator_t *button);
 void init_button_state(creator_t *button);
+
+//init_game_text.c
+int init_texture(texture_t *texture);
 
 
 #endif

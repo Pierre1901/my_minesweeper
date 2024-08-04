@@ -6,11 +6,11 @@
 
 #include "../my.h"
 
-int draw_menu(sfRenderWindow *window, int game, creator_t *button, sfClock *clock)
+int draw_menu(sfRenderWindow *window, int game, creator_t *button, sfClock *clock, texture_t *texture)
 {
     if (game == 0) {
         sfRenderWindow_clear(window, sfBlack);
-        if (start_screen(window, button, clock) == 1)
+        if (start_screen(window, button, clock, texture) == 1)
             return 1;
         sfRenderWindow_display(window);
     }
@@ -25,7 +25,9 @@ int init_window(creator_t *button)
     int game = 0;
     sfEvent event;
     sfClock *clock = sfClock_create();
-
+    texture_t texture = {NULL};
+    if (init_texture(&texture) == 1)
+        return 1;
     if (!window)
         return 1;
     create_all_buttons(button);
@@ -36,7 +38,7 @@ int init_window(creator_t *button)
                 sfRenderWindow_close(window);
             handle_event_in_menu(&event, button, window, &game);
         }
-        if (draw_menu(window, game, button, clock) == 1)
+        if (draw_menu(window, game, button, clock, &texture) == 1)
             return 1;
         if (lunch_difficulty(window, &game, button) == 1)
             return 1;
@@ -46,5 +48,8 @@ int init_window(creator_t *button)
     sfRenderWindow_destroy(window);
     destroy_button(button);
     sfClock_destroy(clock);
+    sfTexture_destroy(texture.easy_text);
+    sfTexture_destroy(texture.hard_text);
+    sfTexture_destroy(texture.arrow_text);
     return 0;
 }
