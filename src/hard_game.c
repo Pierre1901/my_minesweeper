@@ -120,7 +120,7 @@ int anim_background_in_hard(sfRenderWindow *window, sfClock *clock)
     return 0;
 }
 
-int start_hard(sfRenderWindow *window, sfTexture *number_text[], mine_game_t *mine)
+int start_hard(sfRenderWindow *window, sfTexture *number_text[], mine_game_t *mine, creator_t *button)
 {
     grid_t grid[HARD_SIZE][HARD_SIZE];
     init_grid_in_hard(grid);
@@ -129,11 +129,12 @@ int start_hard(sfRenderWindow *window, sfTexture *number_text[], mine_game_t *mi
     sfEvent event;
     sfTexture *flag_text = sfTexture_createFromFile("ressources/flag.png", NULL);
     sfClock *clock = sfClock_create();
+    button_state_menu_to_game(button);
     if (!flag_text)
         return 1;
     while (mine->in_game && mine->close){
         sfRenderWindow_clear(window, sfBlack);
-        handle_events_in_hard_game(window, grid, &event, mine);
+        handle_events_in_hard_game(window, grid, &event, mine, button);
         if (mine->menu)
             break;
         if (mine->close == 0)
@@ -146,6 +147,7 @@ int start_hard(sfRenderWindow *window, sfTexture *number_text[], mine_game_t *mi
         draw_hard_map(rect, flag_text, window, grid, number_text);
         show_game_over_screen(window, event, mine);
         show_win_easy_screen(window, event, mine);
+        draw_button(button, window);
         sfRenderWindow_display(window);
     }
     sfRectangleShape_destroy(rect);
