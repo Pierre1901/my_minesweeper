@@ -30,10 +30,14 @@ void handle_event_in_menu(sfEvent *event, creator_t *button_creator, sfRenderWin
 {
     if (event->type == sfEvtMouseButtonPressed) {
         for (int i = 0; i < button_creator->count; i++) {
-                if (button_creator->button[0]->is_clicked(button_creator->button[0], event->mouseButton))
+                if (button_creator->button[0]->is_clicked(button_creator->button[0], event->mouseButton)) {
                     *game = 1;
-                if (button_creator->button[1]->is_clicked(button_creator->button[1], event->mouseButton))
+                    sfRectangleShape_setOutlineThickness(button_creator->button[i]->rect, 1.0f);
+                }
+                if (button_creator->button[1]->is_clicked(button_creator->button[1], event->mouseButton)) {
                     *game = 2;
+                    sfRectangleShape_setOutlineThickness(button_creator->button[i]->rect, 1.0f);
+                }
         }
     }
     if (event->type == sfEvtMouseMoved) {
