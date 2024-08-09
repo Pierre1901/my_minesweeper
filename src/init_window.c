@@ -34,7 +34,7 @@ int init_window(creator_t *button)
     init_button_state(button);
     while (sfRenderWindow_isOpen(window)) {
         while (sfRenderWindow_pollEvent(window, &event)){
-            if (event.type == sfEvtClosed)
+            if (event.type == sfEvtClosed || (event.type == sfEvtKeyPressed && event.key.code == sfKeyQ) || button->button[3]->is_clicked(button->button[3], event.mouseButton))
                 sfRenderWindow_close(window);
             handle_event_in_menu(&event, button, window, &game);
         }

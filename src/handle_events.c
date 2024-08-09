@@ -44,8 +44,11 @@ void handle_event_in_menu(sfEvent *event, creator_t *button_creator, sfRenderWin
         for (int i = 0; i < button_creator->count; i++) {
             if (button_creator->button[i]->is_hover(button_creator->button[i], event->mouseMove))
                 sfRectangleShape_setOutlineThickness(button_creator->button[i]->rect, 3.0f);
-            else
+            else {
                 sfRectangleShape_setOutlineThickness(button_creator->button[i]->rect, 1.0f);
+                sfRectangleShape_setOutlineThickness(button_creator->button[3]->rect, 0.0f);
+            }
+
         }
     }
     sfFloatRect visibleArea =
@@ -62,7 +65,7 @@ void handle_events_in_easy_game(sfRenderWindow *window, grid_t grid[EASY_SIZE][E
     int view_y;
 
     while (sfRenderWindow_pollEvent(window, event)){
-        if (event->type == sfEvtClosed || (event->type == sfEvtKeyPressed && event->key.code == sfKeyQ))
+        if (event->type == sfEvtClosed || (event->type == sfEvtKeyPressed && event->key.code == sfKeyQ) || button->button[3]->is_clicked(button->button[3], event->mouseButton))
             mine->close = 0;
         if (event->type == sfEvtKeyPressed && event->key.code == sfKeyR)
             mine->in_game = 0;
@@ -102,7 +105,7 @@ void handle_events_in_hard_game(sfRenderWindow *window, grid_t grid[HARD_SIZE][H
     int view_y;
 
     while (sfRenderWindow_pollEvent(window, event)){
-        if (event->type == sfEvtClosed || (event->type == sfEvtKeyPressed && event->key.code == sfKeyQ))
+        if (event->type == sfEvtClosed || (event->type == sfEvtKeyPressed && event->key.code == sfKeyQ) || button->button[3]->is_clicked(button->button[3], event->mouseButton))
             mine->close = 0;
         if (event->type == sfEvtKeyPressed && event->key.code == sfKeyR)
             mine->in_game = 0;

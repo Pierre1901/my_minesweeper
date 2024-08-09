@@ -48,6 +48,7 @@ int start_screen(sfRenderWindow *window, creator_t *button, sfClock *clock, text
     sfRectangleShape_setTexture(button->button[0]->rect, texture->easy_text, sfTrue);
     sfRectangleShape_setTexture(button->button[1]->rect, texture->hard_text, sfTrue);
     sfRectangleShape_setTexture(button->button[2]->rect, texture->arrow_text, sfTrue);
+    sfRectangleShape_setTexture(button->button[3]->rect, texture->red_cross, sfTrue);
     show_animate_background(window, clock);
     draw_button(button, window);
     if (show_name_of_game(window) == 1)

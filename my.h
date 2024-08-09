@@ -54,6 +54,7 @@ typedef struct texture_t {
     sfTexture  *easy_text;
     sfTexture *hard_text;
     sfTexture *arrow_text;
+    sfTexture *red_cross;
 } texture_t;
 
 //init_window.c
